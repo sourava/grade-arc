@@ -1,30 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import ReactJson from 'react-json-view'
+import React from "react";
+import styled from "styled-components";
+import ReactJson from "react-json-view";
 
-const Task2 = () => {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState(null);
-    const url = 'https://randomuser.me/api/?results=20';
+const JSONWrapper = styled.div`
+  width: 100%;
+  max-height: 200px;
+  overflow: scroll;
+`;
 
-    const fetchData = async () => {
-        axios.get(url).then(function (response) {
-            setData(response.data.results);
-        }).catch(function (error) {
-            setError(error.response.data);
-        });
-    }
-
-    useEffect(() => {
-        fetchData()
-    }, [])
-
-    return (
-        <div>
-            <ReactJson src={data} />
-            <button onClick={fetchData}>Refresh</button>
-        </div>
-    );
-}
+const Task2 = ({ data }) => {
+  return (
+    <JSONWrapper>
+      <ReactJson theme="monokai" src={data.data} />
+    </JSONWrapper>
+  );
+};
 
 export default Task2;
